@@ -1,35 +1,34 @@
-import bot from './assets/bot.svg'  //importing bot file 
-import user from './assets/user.svg' //importing user file
+import bot from "./assets/bot.svg"; //importing bot file
+import user from "./assets/user.svg"; //importing user file
 
-const form = document.querySelector('form')
-const chatContainer = document.querySelector('#chat_container')
+const form = document.querySelector("form");
+const chatContainer = document.querySelector("#chat_container");
 
 let loadInterval;
 
 function loader(element) {
-  element.textContent= '';
+  element.textContent = "";
 
   loadInterval = setInterval(() => {
-    element.textContent += '.';
+    element.textContent += ".";
 
-    if (element.textContent === '....') {
-      element.textContent ='';
+    if (element.textContent === "....") {
+      element.textContent = "";
     }
-
-  }, 300)
-} // creating a function that handles the loading prompt before responding to the user for our bot 
+  }, 300);
+} // creating a function that handles the loading prompt before responding to the user for our bot
 
 function typeText(element, text) {
-  let index= 0;
+  let index = 0;
 
   let interval = setInterval(() => {
-    if(index < text.length) {
+    if (index < text.length) {
       element.innerHTML += text.charAt(index);
       index++;
     } else {
-      clearInterval(interval)
+      clearInterval(interval);
     }
-  }, 20)
+  }, 20);
 }
 
 function generationUniqueId() {
@@ -41,14 +40,13 @@ function generationUniqueId() {
 } // creating a function to generate a
 
 function chatStripe(isAi, value, uniqueId) {
-  return (
-  `
-    <div class="wrapper ${isAi && 'ai'}">
+  return `
+    <div class="wrapper ${isAi && "ai"}">
       <div class="chat">
         <div class= "profile">
           <img
             src="${isAi ? bot : user}"
-            alt="${isAi ? 'bot' : 'user'}"
+            alt="${isAi ? "bot" : "user"}"
           />
         </div>
         <div class="message" id=${uniqueId}>${value}</div>
@@ -57,18 +55,15 @@ function chatStripe(isAi, value, uniqueId) {
 
 
   
-  `
-
-
-  )
-} 
+  `;
+}
 
 const handleSubmit = async (e) => {
   e.preventDefault();
 
   const data = new FormData(form);
 
-  chatContainer.innerHTML += chatStripe(false, data.get('prompt'));
+  chatContainer.innerHTML += chatStripe(false, data.get("prompt"));
 
   form.reset();
 
@@ -81,38 +76,38 @@ const handleSubmit = async (e) => {
 
   loader(messageDiv);
 
-  const response = await fetch('http://localhost:3000' , {
-    method: 'POST',
+  const response = await fetch("http://localhost:7000", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body : JSON.stringify({
-      prompt: data.get('prompt')
-    })
-  })
+    body: JSON.stringify({
+      prompt: data.get("prompt"),
+    }),
+  });
 
   clearInterval(loadInterval);
-  messageDiv.innerHTML = '';
+  messageDiv.innerHTML = "";
 
   if (response.ok) {
     const data = await response.json();
     const parsedData = data.bot.trim();
 
-    console.log({parsedData})
+    console.log({ parsedData });
 
     typeText(messageDiv, parsedData);
   } else {
     const err = await response.text();
 
-    messageDiv.innerHTML = "Something went wrong! :/"
+    messageDiv.innerHTML = "Something went wrong! :/";
 
-    alert(err)
+    alert(err);
   }
-}
+};
 
-form.addEventListener('submit', handleSubmit)
-form.addEventListener('keyup', (e) => {
+form.addEventListener("submit", handleSubmit);
+form.addEventListener("keyup", (e) => {
   if (e.keyCode === 13) {
     handleSubmit(e);
-  } 
-})
+  }
+});
