@@ -21,3 +21,7 @@ If you are interested in using this chatbot, please feel free to clone or fork t
 #
 
 # UI Screenshot
+
+**Asking my clone a question** ![Asking my clone a question](./Static/images/Cloneshot.png)
+
+#
