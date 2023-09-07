@@ -76,11 +76,6 @@ const handleSubmit = async (e) => {
 
   loader(messageDiv);
 
-  console.log(
-    JSON.stringify({
-      prompt: data.get("prompt"),
-    })
-  );
   const response = await fetch("https://chatgpt-clone3-0.onrender.com/", {
     method: "POST",
     headers: {
