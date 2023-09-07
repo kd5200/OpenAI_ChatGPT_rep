@@ -1,3 +1,4 @@
 environment/
 node_modules/
 Static/
+.env

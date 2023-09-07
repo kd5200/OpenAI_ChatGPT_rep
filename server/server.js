@@ -1,14 +1,13 @@
 // The purpose of this file is to configure our server to make calls to open AI
 
 import express from "express";
-import * as dotenv from "dotenv";
 import cors from "cors";
 import { Configuration, OpenAIApi } from "openai";
-
-dotenv.config();
+import "dotenv/config";
 
 const configuration = new Configuration({
   //creating a variable for my OpenAI API key
+  organization: process.env.OPENAI_ORGANIZATION,
   apiKey: process.env.OPENAI_API_KEY,
 });
 
