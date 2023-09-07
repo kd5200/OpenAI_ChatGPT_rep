@@ -9,7 +9,6 @@ dotenv.config();
 
 const configuration = new Configuration({
   //creating a variable for my OpenAI API key
-  organization: "org-XxsY75K3VIDdROfjDUGLXfgZ",
   apiKey: process.env.OPENAI_API_KEY,
 });
 
