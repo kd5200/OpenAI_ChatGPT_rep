@@ -1,6 +1,7 @@
 // The purpose of this file is to configure our server to make calls to open AI
 
 import express from "express";
+import * as dotenv from "dotenv";
 import cors from "cors";
 import { Configuration, OpenAIApi } from "openai";
 import "dotenv/config";
